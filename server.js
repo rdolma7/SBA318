@@ -23,6 +23,7 @@ router
     const book = req.body;
     console.log(book);
     res.status(201).send("Created successfully");
+    // library.push(book);
   });
 
 // `<label for="bookTitle">Book Title:</label>
