@@ -1,30 +1,70 @@
 import express from "express";
+
 import { library } from "./library.js";
 
-// const express = require("express");
+
 const app = express();
 const port = 3000;
-const router = express.Router();
 
-app.listen(port, () => {
-  console.log("server is running");
+//register view engine
+app.set('view engine', 'ejs');
+
+app.get('/', (req,res)=>{
+  res.render('index');
 });
 
-app.use(express.json());
-// middleware function
-app.use("/library", router);
+app.listen(port, () => {
+  console.log("Server is running");
+});
 
-router
-  .route("/books") //this library will acccept get and post methods
-  .get((req, res) => {
-    res.send(library);
-  })
-  .post((req, res) => {
-    const book = req.body;
-    console.log(book);
-    res.status(201).send("Created successfully");
-    // library.push(book);
-  });
+// middleware function
+app.use(express.json());
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send("Something went wrong");
+});
+
+
+// // router
+// //   .route("/books") //this library will acccept get and post methods
+app.get("/library/books", (req, res, next) => {
+  res.send(library);
+});
+app.post("/library/books", (req, res) => {
+  const { title, author, datePublished } = req.body;
+  const book = {
+    id: library.length + 1,
+    title,
+    author,
+    datePublished,
+  };
+  library.push(book);
+  res.status(201).send("Created successfully");
+});
+// app.put("library/books/:id", (req, res) => {
+//   const book = library.find((item) => item.id == req.params.id);
+//   if (book) {
+//     const { title, author, datePublished } = req.body;
+//     book.title = title;
+//     book.author = author;
+//     book.datePublished = datePublished;
+//     res.send(book);
+//   } else {
+//     res.status(404).send("Unsuccessful");
+//   }
+  //   res.send("Data received successfully");
+  //   res.status(201).send("Update successful");
+// });
+app.delete("/library/books", (req, res) => {
+  const book = req.body;
+  library.pop(book);
+  res.send(library);
+  res.status(201).send("Delete successful");
+});
+
+// .delete((req,res)=>{
+//   res.
+// });
 
 // `<label for="bookTitle">Book Title:</label>
 //     <input type="text" placeholder="Name of the book" id="title"/>
