@@ -10,7 +10,7 @@ const port = 3000;
 app.set('view engine', 'ejs');
 
 app.get('/', (req,res)=>{
-  res.render('index');
+  res.render('index', {library});
 });
 
 app.listen(port, () => {
@@ -27,6 +27,7 @@ app.use((err, req, res, next) => {
 
 // // router
 // //   .route("/books") //this library will acccept get and post methods
+
 app.get("/library/books", (req, res, next) => {
   res.send(library);
 });
@@ -41,20 +42,20 @@ app.post("/library/books", (req, res) => {
   library.push(book);
   res.status(201).send("Created successfully");
 });
-// app.put("library/books/:id", (req, res) => {
-//   const book = library.find((item) => item.id == req.params.id);
-//   if (book) {
-//     const { title, author, datePublished } = req.body;
-//     book.title = title;
-//     book.author = author;
-//     book.datePublished = datePublished;
-//     res.send(book);
-//   } else {
-//     res.status(404).send("Unsuccessful");
-//   }
-  //   res.send("Data received successfully");
-  //   res.status(201).send("Update successful");
-// });
+app.put("library/books/:id", (req, res) => {
+  const book = library.find((item) => item.id == req.params.id);
+  if (book) {
+    const { title, author, datePublished } = req.body;
+    book.title = title;
+    book.author = author;
+    book.datePublished = datePublished;
+    res.send(book);
+  } else {
+    res.status(404).send("Unsuccessful");
+  }
+    res.send("Data received successfully");
+    res.status(201).send("Update successful");
+});
 app.delete("/library/books", (req, res) => {
   const book = req.body;
   library.pop(book);
