@@ -21,20 +21,26 @@
 <ul>
     <% library.forEach(book=> { %>
       <li>Title of the book: <%= book.title%> - Author: <%= book.author %></li>
-    <% }) %>
+  <% }) %>
   </ul>
-    
-  </body>
-</html>
-
-
-  <h2>Users</h2>
-
+  
+  <h2>Add a book</h2>
   <!-- <h3>Add a Comment</h3> -->
-  <form>
-    <input name="username" placeholder="Username" required />
-    <input name="pw"  type="password" placeholder="password" required />
-    <button type="submit">Enter</button>
+  <form action="/library/books" method="POST">
+    <input name="title" placeholder="Book Title" required/>
+    <input name="author"  placeholder="Author" required/>
+    <button type="submit">Add</button>
   </form>
+  <h2>Update author</h2>
+  <form action="/library/books/update?_method=PATCH" method="POST">
+      <input type="number" name="id" placeholder="Book ID" required>
+      <input type="text" name="author" placeholder="New Author" required>
+      <button type="submit">Update Author</button>
+    </form>
+<h2>Delete a book</h2>
+<form action="/library/books/delete?_method=delete" method="POST">
+      <input type="number" name="id" placeholder="Book ID" required>
+      <button type="submit">Delete</button>
+</form>
 </body>
 </html>
