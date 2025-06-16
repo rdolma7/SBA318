@@ -2,7 +2,6 @@ import express from "express";
 
 import { library } from "./library.js";
 
-
 const app = express();
 const port = 3000;
 
@@ -10,7 +9,7 @@ const port = 3000;
 app.set('view engine', 'ejs');
 
 app.get('/', (req,res)=>{
-  res.render('index', {library});
+res.render('index', {library});
 });
 
 app.listen(port, () => {
@@ -42,6 +41,18 @@ app.post("/library/books", (req, res) => {
   library.push(book);
   res.status(201).send("Created successfully");
 });
+
+ app.patch('/:id', (req, res) => {
+    const id = req.params.id;
+    const updatedAccount = req.body;
+    const index = accounts.findIndex(account => account.id === parseInt(id));
+    if (index !== -1) {
+      accounts[index] = { ...accounts[index], ...updatedAccount };
+      res.send(accounts[index]);
+    } else {
+      res.status(404).send({ error: 'Account not found' });
+    }
+  })
 app.put("library/books/:id", (req, res) => {
   const book = library.find((item) => item.id == req.params.id);
   if (book) {

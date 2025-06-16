@@ -4,13 +4,37 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <style>
+      body{
+        background-color: beige;
+      }
+      ul{
+        font-size: 15pt;
+      }
+      li{
+        color: rgb(126, 84, 29)
+      }
+    </style>
   </head>
   <body>
-    <h1>Library</h1>
-    <button>Add</button>
-    <% library.forEach((book)=>{ %>
-    <h3><%=book.title %></h3>
-    <h3><%=book.author %></h3>
+    <h1>Library Catalog</h1>
+<ul>
+    <% library.forEach(book=> { %>
+      <li>Title of the book: <%= book.title%> - Author: <%= book.author %></li>
     <% }) %>
+  </ul>
+    
   </body>
+</html>
+
+
+  <h2>Users</h2>
+
+  <!-- <h3>Add a Comment</h3> -->
+  <form>
+    <input name="username" placeholder="Username" required />
+    <input name="pw"  type="password" placeholder="password" required />
+    <button type="submit">Enter</button>
+  </form>
+</body>
 </html>
