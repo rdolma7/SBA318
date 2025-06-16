@@ -64,31 +64,7 @@ app.patch("/library/books/:id", (req, res) => {
   res.redirect("/");
 });
 
-// app.patch("/library/books/:id", (req, res) => {
-//   const id = req.params.id;
-//   const updatedAccount = req.body;
-//   const index = accounts.findIndex((account) => account.id === parseInt(id));
-//   if (index !== -1) {
-//     accounts[index] = { ...accounts[index], ...updatedAccount };
-//     res.send(accounts[index]);
-//   } else {
-//     res.status(404).send({ error: "Account not found" });
-//   }
-// });
-// app.put("library/books/:id", (req, res) => {
-//   const book = library.find((item) => item.id == req.params.id);
-//   if (book) {
-//     const { title, author, datePublished } = req.body;
-//     book.title = title;
-//     book.author = author;
-//     book.datePublished = datePublished;
-//     res.send(book);
-//   } else {
-//     res.status(404).send("Unsuccessful");
-//   }
-//   res.send("Data received successfully");
-//   res.status(201).send("Update successful");
-// });
+
 app.delete("/library/books/delete", (req, res, next) => {
   const { id } = req.body;
   if (!id) {
@@ -118,3 +94,29 @@ app.use((err, req, res, next) => {
 app.listen(port, () => {
   console.log("Server is running");
 });
+
+// app.patch("/library/books/:id", (req, res) => {
+//   const id = req.params.id;
+//   const updatedAccount = req.body;
+//   const index = accounts.findIndex((account) => account.id === parseInt(id));
+//   if (index !== -1) {
+//     accounts[index] = { ...accounts[index], ...updatedAccount };
+//     res.send(accounts[index]);
+//   } else {
+//     res.status(404).send({ error: "Account not found" });
+//   }
+// });
+// app.put("library/books/:id", (req, res) => {
+//   const book = library.find((item) => item.id == req.params.id);
+//   if (book) {
+//     const { title, author, datePublished } = req.body;
+//     book.title = title;
+//     book.author = author;
+//     book.datePublished = datePublished;
+//     res.send(book);
+//   } else {
+//     res.status(404).send("Unsuccessful");
+//   }
+//   res.send("Data received successfully");
+//   res.status(201).send("Update successful");
+// });
