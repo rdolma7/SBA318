@@ -7,14 +7,12 @@ import { library } from "./library.js";
 const app = express();
 const port = 3000;
 
-//register view engine
 app.set("view engine", "ejs");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 
-//Methods
 app.get("/", (req, res) => {
   res.render("index", { library });
 });
@@ -31,12 +29,7 @@ app.post("/library/books", (req, res) => {
   const newBook = { id: library.length + 1, title, author };
   library.push(newBook);
 
-  if (req.headers["content-type"]==="application/json"){
-    return res.status(201).send(newBook);
-  }
-
   res.redirect("/");
-
 });
 
 app.patch("/library/books/update", (req, res, next) => {
@@ -54,16 +47,12 @@ app.patch("/library/books/:id", (req, res) => {
 
   const book = library.find((b) => b.id === id);
   if (!book) {
-   return res.status(404).send("Unsuccessful. Book not found");
+    return res.status(404).send("Unsuccessful. Book not found");
   }
   book.author = author;
-
-  if(req.headers["content-type"]==="application/json"){
-    return res.status(200).send(book);
-  }
+  // return res.status(200).send(book);
   res.redirect("/");
 });
-
 
 app.delete("/library/books/delete", (req, res, next) => {
   const { id } = req.body;
@@ -76,15 +65,14 @@ app.delete("/library/books/delete", (req, res, next) => {
 app.delete("/library/books/:id", (req, res) => {
   const id = parseInt(req.params.id);
   const index = library.findIndex((book) => book.id === id);
-
-if (index === -1) {
- return res.status(404).send("Not found");
-}
-library.splice(index, 1);
-res.redirect("/");
+  console.log(library);
+  if (index === -1) {
+    return res.status(404).send("Not found");
+  }
+  library.splice(index, 1);
+  console.log(library);
+  res.redirect("/");
 });
-
-//middleware error functions
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
